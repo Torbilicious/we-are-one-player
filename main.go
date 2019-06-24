@@ -24,8 +24,13 @@ var (
 	testDisplay *ProgressBar
 
 	radioStations = map[string]string{
-		"Housetime.fm":  "http://lw1.mp3.tb-group.fm/ht.mp3",
-		"Trancebase.fm": "http://lw2.mp3.tb-group.fm/trb.mp3",
+		"HouseTime.FM":  "http://lw1.mp3.tb-group.fm/ht.mp3",
+		"TranceBase.FM": "http://lw2.mp3.tb-group.fm/trb.mp3",
+		"TechnoBase.FM": "http://lw1.mp3.tb-group.fm/tb.mp3",
+		"HardBase.FM":   "http://lw3.mp3.tb-group.fm/hb.mp3",
+		"CoreTime.FM":   "http://lw3.mp3.tb-group.fm/ct.mp3",
+		"ClubTime.FM":   "http://lw3.mp3.tb-group.fm/clt.mp3",
+		"TeaTime.FM":    "http://lw3.mp3.tb-group.fm/tt.mp3",
 	}
 )
 
@@ -39,7 +44,7 @@ func main() {
 		go initAudio(radioStations[selected])
 	})
 
-	stationPicker.SetSelected("Housetime.fm")
+	stationPicker.SetSelected("HouseTime.FM")
 
 	var playPauseButton *Button
 	playPauseButton = NewButton("Play", func() {
@@ -66,7 +71,7 @@ func main() {
 			),
 			playPauseButton,
 			volumeArea,
-			testDisplay,
+			//testDisplay,
 		),
 	)
 
