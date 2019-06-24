@@ -8,6 +8,7 @@ import (
 	"github.com/faiface/beep/speaker"
 	"log"
 	"net/http"
+	"sort"
 	"time"
 
 	"github.com/faiface/beep/mp3"
@@ -38,7 +39,7 @@ func main() {
 	application := app.New()
 	w = application.NewWindow("Player")
 
-	stationPicker := NewRadio(getKeys(radioStations), func(selected string) {
+	stationPicker := NewRadio(getKeysSorted(radioStations), func(selected string) {
 		log.Print(selected)
 
 		go initAudio(radioStations[selected])
@@ -148,11 +149,13 @@ func check(err error) {
 	}
 }
 
-func getKeys(in map[string]string) (keys []string) {
+func getKeysSorted(in map[string]string) (keys []string) {
 	keys = make([]string, 0, len(in))
 	for k := range in {
 		keys = append(keys, k)
 	}
+
+	sort.Strings(keys)
 
 	return
 }
