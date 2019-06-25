@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/faiface/beep"
+	"math"
 )
 
 type VisualizerStreamer struct {
@@ -17,9 +18,8 @@ func (v *VisualizerStreamer) Stream(samples [][2]float64) (n int, ok bool) {
 	highestGain := 0.0
 
 	for i := range samples[:n] {
-		if samples[i][0] > highestGain {
-			highestGain = samples[i][0]
-		}
+		highestGain = math.Max(samples[i][0], highestGain)
+		highestGain = math.Max(samples[i][1], highestGain)
 	}
 
 	v.lastGainValues = append(v.lastGainValues, highestGain)
@@ -37,10 +37,10 @@ func (v *VisualizerStreamer) Err() error {
 }
 
 func getAverage(list []float64) float64 {
-	tmp := 0.0
+	sum := 0.0
 	for _, n := range list {
-		tmp += n
+		sum += n
 	}
 
-	return tmp / float64(len(list))
+	return sum / float64(len(list))
 }
