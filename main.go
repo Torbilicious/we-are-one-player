@@ -42,7 +42,7 @@ func main() {
 	stationPicker := NewRadio(getKeysSorted(radioStations), func(selected string) {
 		log.Print(selected)
 
-		go initAudio(radioStations[selected])
+		go initAudio(radioStations[selected], volume.Volume)
 	})
 
 	stationPicker.SetSelected("HouseTime.FM")
@@ -76,7 +76,7 @@ func main() {
 		),
 	)
 
-	go initAudio(radioStations[stationPicker.Selected])
+	go initAudio(radioStations[stationPicker.Selected], initialVolume)
 
 	w.ShowAndRun()
 }
@@ -109,7 +109,7 @@ func initVolumeArea() *Box {
 	return volumeArea
 }
 
-func initAudio(url string) {
+func initAudio(url string, initialVolume float64) {
 	resp, err := http.Get(url)
 	check(err)
 	streamer, format, err := mp3.Decode(resp.Body)
